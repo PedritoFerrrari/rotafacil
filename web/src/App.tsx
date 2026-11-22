@@ -19,10 +19,9 @@ export default function App() {
 
   async function carregar() {
     try {
-      const lista = await listarEncomendas();
-      setEncomendas(lista);
+      setEncomendas(await listarEncomendas());
     } catch {
-      setErro("Não foi possível conectar à API na porta 3333.");
+      setErro("Não foi possível conectar na API.");
     }
   }
 
@@ -42,8 +41,7 @@ export default function App() {
 
   async function handleVerHistorico(codigo: string) {
     try {
-      const historico = await buscarHistoricoEncomenda(codigo);
-      setLogs(historico);
+      setLogs(await buscarHistoricoEncomenda(codigo));
       setCodigoHistorico(codigo);
     } catch (err: any) {
       setErro(err.message);
@@ -51,28 +49,15 @@ export default function App() {
   }
 
   return (
-    <div style={{ maxWidth: "1040px", margin: "32px auto", padding: "0 16px", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      <header style={{ marginBottom: "24px" }}>
-        <h1 style={{ margin: 0, color: "#0f172a" }}>RotaFácil — Despacho Urbano</h1>
-        <p style={{ margin: "4px 0 0", color: "#64748b" }}>
-          Gestão de encomendas, cálculo de frete e rastreamento de entregas
-        </p>
-      </header>
-
-      {erro && (
-        <div style={{ background: "#fee2e2", color: "#991b1b", padding: "12px 16px", borderRadius: "6px", marginBottom: "16px", border: "1px solid #fecaca" }}>
-          <strong>Regra de Negócio / Aviso:</strong> {erro}
-        </div>
-      )}
-
+    <div style={{ maxWidth: "960px", margin: "24px auto", padding: "0 16px", fontFamily: "sans-serif" }}>
+      <h2 style={{ marginTop: 0 }}>RotaFácil</h2>
+      {erro && <p style={{ color: "#b91c1c" }}>{erro}</p>}
       <FormularioEncomenda onCriada={carregar} onErro={setErro} />
-
       <TabelaEncomendas
         encomendas={encomendas}
         onMudarStatus={handleMudarStatus}
         onVerHistorico={handleVerHistorico}
       />
-
       <ModalHistorico
         codigo={codigoHistorico}
         logs={logs}
