@@ -6,18 +6,7 @@
 - [x] Atualização de status
 - [x] Regras / ações implementadas: Cálculo dinâmico de frete e prazo por modalidade de entrega; validação de transições permitidas entre status; registro automático de histórico de auditoria e disparo de notificação simulada ao criar ou atualizar uma encomenda.
 
-## 2. Como Executar e Testar
-- **Passos para rodar a API:**
-  1. Acesse a pasta da API: `cd api`
-  2. Instale as dependências: `npm install`
-  3. Inicie o servidor: `npm run dev` (disponível em `http://localhost:3333`)
-
-- **Roteiro rápido de teste (2 a 3 passos para validar o fluxo):**
-  1. Envie um `POST /encomendas` com cliente, origem, destino, peso e modalidade (`PADRAO`, `EXPRESSA` ou `BALCAO`) e valide o retorno `201` com `taxa`, `prazoHoras` e `status: "PENDENTE"`.
-  2. Envie `PATCH /encomendas/RF-101/status` com `{"acao":"INICIAR_ROTA"}` e depois `{"acao":"CONCLUIR"}`, conferindo em `GET /encomendas` a evolução do status e em `GET /encomendas/RF-101/historico` os registros de auditoria.
-  3. Tente enviar `{"acao":"CANCELAR"}` após `ENTREGUE` e confirme o retorno `400` bloqueando a transição inválida, além das mensagens de notificação/auditoria no console da API.
-
-## 3. Padrões de Projeto Escolhidos (3 padrões)
+## 2. Padrões de Projeto Escolhidos (3 padrões)
 
 ### Padrão 1: Strategy (Comportamental)
 - **Onde foi aplicado:** `api/src/domain/strategies/` (`FreteStrategy.ts`, `PadraoStrategy.ts`, `ExpressaStrategy.ts`, `RetiradaBalcaoStrategy.ts`) e consumido em `EncomendaService.ts` (Camada: API).
