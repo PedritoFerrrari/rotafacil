@@ -5,7 +5,7 @@
   3. Inicie o servidor: `npm run dev` (disponível em `http://localhost:3333`)
 
 - **Passos para rodar a Web:**
-  - Não aplicável (projeto implementado apenas com API REST em Node.js + TypeScript).
+  - Faça o mesmo que foi feito para a API
 
 - **Roteiro rápido de teste (2 a 3 passos para validar o fluxo):**
   1. Envie um `POST /encomendas` com cliente, origem, destino, peso e modalidade (`PADRAO`, `EXPRESSA` ou `BALCAO`) e valide o retorno `201` com `taxa`, `prazoHoras` e `status: "PENDENTE"`.
